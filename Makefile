@@ -8,9 +8,10 @@ CC = cc
 
 RM = rm -rf
 
-CFLAGS = -Wall -Werro -Wextra
+#CFLAGS = -Wall -Werro -Wextra
 
 PRINTF = ft_printf/libftprintf.a
+
 
 all: $(NAME)
 
