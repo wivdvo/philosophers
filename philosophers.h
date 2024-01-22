@@ -6,7 +6,7 @@
 /*   By: wvan-der <wvan-der@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/20 16:45:28 by wvan-der          #+#    #+#             */
-/*   Updated: 2024/01/22 14:36:17 by wvan-der         ###   ########.fr       */
+/*   Updated: 2024/01/22 16:08:41 by wvan-der         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,10 +19,19 @@
 typedef struct s_philo
 {
 	unsigned int	n_philo;
-	time_t	time_to_die;
-	time_t	time_to_eat;
-	time_t	time_to_sleep;
-	unsigned int n_times_must_eat;
+	time_t			time_to_die;
+	time_t			time_to_eat;
+	time_t			time_to_sleep;
+	unsigned int	n_times_must_eat;
+
+	int				sleeping;
+	int				eating;
+	int				dead;
+
+	time_t			time_since_eating;
+	time_t			times_eaten;
+
+	
 }	t_philo;
 
 # include <stdlib.h>
