@@ -1,6 +1,7 @@
 NAME = philosophers
 
-SRCS = main.c \
+SRCS = 	utils.c \
+		main.c
 
 OBJS = $(SRCS:.c=.o)
 
