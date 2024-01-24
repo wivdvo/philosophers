@@ -21,7 +21,7 @@ all: $(NAME)
 $(PRINTF):
 			make -C ft_printf
 
-$(NAME):	$(OBJS)	$(PRINTF) philosophers.h
+$(NAME):	$(OBJS)	$(PRINTF)
 				$(CC) $(OBJS) $(CFLAGS) $(PRINTF) -o philosophers
 
 clean:

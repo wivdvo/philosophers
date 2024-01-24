@@ -6,7 +6,7 @@
 /*   By: wvan-der <wvan-der@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/24 14:41:29 by wvan-der          #+#    #+#             */
-/*   Updated: 2024/01/24 18:08:55 by wvan-der         ###   ########.fr       */
+/*   Updated: 2024/01/24 18:38:01 by wvan-der         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,7 +79,7 @@ int	init_philos(t_main *main)
 	main->philo = forks;
 	while (i < main->n_philo)
 	{
-		pthread_mutx_init(main->forks[i], NULL);
+		pthread_mutex_init(&(main->forks)[i], NULL);
 		i++;
 	}
 	i  = 0;
