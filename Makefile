@@ -1,7 +1,9 @@
 NAME = philosophers
 
-SRCS = 	utils.c \
-		main.c
+SRCS = 	main.c \
+init.c \
+logic.c \
+utils.c
 
 OBJS = $(SRCS:.c=.o)
 
@@ -19,7 +21,7 @@ all: $(NAME)
 $(PRINTF):
 			make -C ft_printf
 
-$(NAME):	$(OBJS)	$(PRINTF)
+$(NAME):	$(OBJS)	$(PRINTF) philosophers.h
 				$(CC) $(OBJS) $(CFLAGS) $(PRINTF) -o philosophers
 
 clean:
