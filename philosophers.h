@@ -6,7 +6,7 @@
 /*   By: wvan-der <wvan-der@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/20 16:45:28 by wvan-der          #+#    #+#             */
-/*   Updated: 2024/01/25 10:44:32 by wvan-der         ###   ########.fr       */
+/*   Updated: 2024/01/25 11:05:06 by wvan-der         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,7 +49,7 @@ typedef struct s_main
 	unsigned int	n_times_must_eat;
 	pthread_mutex_t	write_mutex;
 	pthread_mutex_t	check_mutex;
-	t_philo			**philo;
+	t_philo			*philo;
 	unsigned int	n_philo;
 	pthread_mutex_t	*forks;
 	int				dead;
