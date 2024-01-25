@@ -6,7 +6,7 @@
 /*   By: wvan-der <wvan-der@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/22 13:55:19 by wvan-der          #+#    #+#             */
-/*   Updated: 2024/01/24 14:42:30 by wvan-der         ###   ########.fr       */
+/*   Updated: 2024/01/25 13:21:25 by wvan-der         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -137,6 +137,5 @@ int	convert_and_check_input(char *str)
 		return (put_error("invalid number"), -1);
 	if (nb < 0)
 		return (put_error("negativ number"), -1);
-	puts("good");
 	return (1);
 }

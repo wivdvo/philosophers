@@ -6,7 +6,7 @@
 /*   By: wvan-der <wvan-der@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/20 16:45:28 by wvan-der          #+#    #+#             */
-/*   Updated: 2024/01/25 11:05:06 by wvan-der         ###   ########.fr       */
+/*   Updated: 2024/01/25 12:18:06 by wvan-der         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,7 +36,8 @@ typedef struct s_philo
 
 
 
-	pthread_mutex_t	**forks;
+	pthread_mutex_t	*r_fork;
+	pthread_mutex_t *l_fork;
 	pthread_mutex_t	*write_mutex;
 	pthread_mutex_t	*check_mutex;
 }	t_philo;
@@ -63,12 +64,12 @@ void	put_error(char *str);
 size_t	ft_strlen(char *str);
 int		init_main_struct(t_main *main, int ac, char **av);
 int		init_philos(t_main *main);
-int	init_philo_struct(t_philo *philo, int *dead, char **av, int i);
+int		init_philo_struct(t_philo *philo, int *dead, char **av, int i);
 void	philo_logic(t_philo *philo);
 int		monitor_logic(t_main *main);
 int		init_philos(t_main *main);
 int		init_main_struct(t_main *main, int ac, char **av);
-int	convert_and_check_input(char *str);
+int		convert_and_check_input(char *str);
 size_t	get_time(void);
 
 #endif
