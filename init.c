@@ -6,7 +6,7 @@
 /*   By: wvan-der <wvan-der@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/24 14:41:29 by wvan-der          #+#    #+#             */
-/*   Updated: 2024/01/24 18:38:01 by wvan-der         ###   ########.fr       */
+/*   Updated: 2024/01/25 10:49:51 by wvan-der         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,6 +41,7 @@ int	init_main_struct(t_main *main, int ac, char **av)
 	int	i;
 
 	i = 0;
+	main->dead = 0;
 	if (put_input_in_main(main, ac, av) == 0)
 		return (0);
 	philo = (t_philo *)malloc(sizeof(t_philo) * main->n_philo);
@@ -48,11 +49,11 @@ int	init_main_struct(t_main *main, int ac, char **av)
 		return (0);
 	while (i < main->n_philo)
 	{
-		if (init_philo_struct(&philo[i], ac, av, i) == 0)
+		if (init_philo_struct(&philo[i], &main->dead, av, i) == 0)
 			return (0);
 		i++;
 	}
-	main->philo = philo;
+	main->philo = &philo;
 	return (1);
 }
 
@@ -76,9 +77,10 @@ int	init_philos(t_main *main)
 	forks = (pthread_mutex_t *)malloc(sizeof(pthread_mutex_t) * main->n_philo);
 	if (!forks)
 		return (0);
-	main->philo = forks;
+	main->forks = forks;
 	while (i < main->n_philo)
 	{
+		main->philo[1]->forks = &main->forks;
 		pthread_mutex_init(&(main->forks)[i], NULL);
 		i++;
 	}
@@ -98,9 +100,10 @@ int	init_philos(t_main *main)
 	// }
 }
 
-int	init_philo_struct(t_philo *philo, int ac, char **av, int i)
+int	init_philo_struct(t_philo *philo, int *dead, char **av, int i)
 {
 	philo->id = i;
+	philo->dead = dead;
 	philo->n_philo = convert_and_check_input(av[1]);
 	if (philo->n_philo == -1 || philo->n_philo == 0)
 		return (0);
