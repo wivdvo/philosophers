@@ -6,7 +6,7 @@
 /*   By: wvan-der <wvan-der@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/22 13:55:19 by wvan-der          #+#    #+#             */
-/*   Updated: 2024/01/25 13:21:25 by wvan-der         ###   ########.fr       */
+/*   Updated: 2024/01/26 17:12:41 by wvan-der         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -125,7 +125,7 @@ size_t	get_time(void)
 
 	if (gettimeofday(&tv, NULL) != 0)
 		return(put_error("gettimeofday failded"), 0);
-	return ((tv.tv_sec * 1000) + (tv.tv_usec * 1000));
+	return ((tv.tv_sec * 1000) + (tv.tv_usec / 1000));
 }
 
 int	convert_and_check_input(char *str)
@@ -137,5 +137,5 @@ int	convert_and_check_input(char *str)
 		return (put_error("invalid number"), -1);
 	if (nb < 0)
 		return (put_error("negativ number"), -1);
-	return (1);
+	return (nb);
 }

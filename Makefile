@@ -7,6 +7,8 @@ utils.c
 
 OBJS = $(SRCS:.c=.o)
 
+HEADERS = philosophers.h
+
 CC = cc
 
 RM = rm -rf
@@ -21,7 +23,7 @@ all: $(NAME)
 $(PRINTF):
 			make -C ft_printf
 
-$(NAME):	$(OBJS)	$(PRINTF)
+$(NAME):	$(OBJS)	$(PRINTF) $(HEADERS)
 				$(CC) $(OBJS) $(CFLAGS) -g $(PRINTF) -o philosophers
 
 clean:

@@ -6,7 +6,7 @@
 /*   By: wvan-der <wvan-der@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/24 14:41:29 by wvan-der          #+#    #+#             */
-/*   Updated: 2024/01/26 14:22:35 by wvan-der         ###   ########.fr       */
+/*   Updated: 2024/01/26 17:08:30 by wvan-der         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,12 +81,6 @@ int	init_philos(t_main *main)
 
 
 	i = 0;
-	puts("test");
-	while (i < main->n_philo)
-	{
-		main->philo[i].time_last_meal = get_time();
-		i++;
-	}
 	threads = (pthread_t *)malloc(sizeof(pthread_t) * main->n_philo);
 	if (!threads)
 		return (0);
@@ -98,18 +92,23 @@ int	init_philos(t_main *main)
 	i = 0;
 	while (i < main->n_philo)
 	{
+		main->philo[i].write_mutex = &main->write_mutex;
+		main->philo[i].check_mutex = &main->check_mutex;
 		pthread_mutex_init(&(main->forks)[i], NULL);
 		i++;
 	}
 	i  = 0;
-	pthread_create(&monitor, NULL, &monitor_logic, main);
-	while (i < main->n_philo)
+	while (i < main->n_philo)	
 	{
 		main->philo[i].r_fork = &main->forks[i];
-		main->philo[i].l_fork = &main->forks[(i - 1) % main->n_philo];
+		main->philo[i].l_fork = &main->forks[(i + 1) % main->n_philo];
+		main->philo[i].time_last_meal = get_time();
 		pthread_create(&threads[i], NULL, &philo_logic, &(main->philo)[i]);
+		usleep(50);
 		i++;
 	}
+	pthread_create(&monitor, NULL, &monitor_logic, main);
+	// puts("after create threads");
 	// i = 0;
 	// while (i < main->n_philo)
 	// {
