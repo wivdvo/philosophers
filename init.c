@@ -6,7 +6,7 @@
 /*   By: wvan-der <wvan-der@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/24 14:41:29 by wvan-der          #+#    #+#             */
-/*   Updated: 2024/01/25 13:18:01 by wvan-der         ###   ########.fr       */
+/*   Updated: 2024/01/26 14:22:35 by wvan-der         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,6 +42,12 @@ int	init_philo_struct(t_philo *philo, int *dead, char **av, int i)
 	philo->n_philo = convert_and_check_input(av[1]);
 	if (philo->n_philo == -1 || philo->n_philo == 0)
 		return (0);
+	philo->time_to_eat = convert_and_check_input(av[3]);
+	if (philo->time_to_eat == -1 || philo->time_to_eat == 0)
+		return (0);
+	philo->time_to_sleep = convert_and_check_input(av[4]);
+	if (philo->time_to_sleep == -1 || philo->time_to_sleep == 0)
+		return (0);
 	return (1);
 }
 
@@ -71,10 +77,11 @@ int	init_philos(t_main *main)
 {
 	pthread_t	*threads;
 	pthread_t	monitor;
-	pthread_mutex_t *forks;
 	int	i;
 
+
 	i = 0;
+	puts("test");
 	while (i < main->n_philo)
 	{
 		main->philo[i].time_last_meal = get_time();
@@ -83,22 +90,24 @@ int	init_philos(t_main *main)
 	threads = (pthread_t *)malloc(sizeof(pthread_t) * main->n_philo);
 	if (!threads)
 		return (0);
-	forks = (pthread_mutex_t *)malloc(sizeof(pthread_mutex_t) * main->n_philo);
-	if (!forks)
+	main->forks  = (pthread_mutex_t *)malloc(sizeof(pthread_mutex_t) * main->n_philo);
+	if (!main->forks )
 		return (0);
-	main->forks = forks;
+	pthread_mutex_init(&main->write_mutex, NULL);
+	pthread_mutex_init(&main->check_mutex, NULL);
+	i = 0;
 	while (i < main->n_philo)
 	{
 		pthread_mutex_init(&(main->forks)[i], NULL);
 		i++;
 	}
 	i  = 0;
-	pthread_create(&monitor, NULL, monitor_logic, main);
+	pthread_create(&monitor, NULL, &monitor_logic, main);
 	while (i < main->n_philo)
 	{
 		main->philo[i].r_fork = &main->forks[i];
 		main->philo[i].l_fork = &main->forks[(i - 1) % main->n_philo];
-		pthread_create(&threads[i], NULL, philo_logic, &(main->philo)[i]);
+		pthread_create(&threads[i], NULL, &philo_logic, &(main->philo)[i]);
 		i++;
 	}
 	// i = 0;
@@ -107,4 +116,5 @@ int	init_philos(t_main *main)
 	// 	pthread_join(threads[i], NULL);
 	// 	i++;
 	// }
+	return (1);
 }

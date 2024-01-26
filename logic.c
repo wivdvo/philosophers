@@ -6,38 +6,71 @@
 /*   By: wvan-der <wvan-der@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/24 13:49:18 by wvan-der          #+#    #+#             */
-/*   Updated: 2024/01/25 13:21:43 by wvan-der         ###   ########.fr       */
+/*   Updated: 2024/01/26 14:51:54 by wvan-der         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philosophers.h"
 
-void	philo_write(char *s, int id)
+void	*philo_write(char *s, int id)
 {
-	printf("Philo %d %s\n", id, s);
+	printf("%zu %d %s\n", get_time(), id, s);
+	return (NULL);
 }
 
-void	philo_logic(t_philo *philo)
+void	*philo_logic(void *arg)
 {
+	puts("philo logic");
+	t_philo *philo = (t_philo *)arg;
 	while (1)
 	{
+		pthread_mutex_lock(philo->check_mutex);
 		if (*philo->dead == 1)
-			return ;
+			return (NULL);
+		pthread_mutex_unlock(philo->check_mutex);
+
 		pthread_mutex_lock(philo->r_fork);
+		pthread_mutex_lock(philo->write_mutex);
+		philo_write("hast taken a fork", philo->id);
+		pthread_mutex_unlock(philo->write_mutex);
+
 		pthread_mutex_lock(philo->l_fork);
+		pthread_mutex_lock(philo->write_mutex);
+		philo_write("hast taken a fork", philo->id);
+		pthread_mutex_unlock(philo->write_mutex);
+
 		pthread_mutex_lock(philo->write_mutex);
 		philo_write("is eating", philo->id);
 		pthread_mutex_unlock(philo->write_mutex);
-		//pthread_mutex_lock(philo->check_mutex);
+
+		usleep(philo->time_to_eat);
+		philo->times_eaten++;
+		philo->time_last_meal = get_time();
+		pthread_mutex_unlock(philo->r_fork);
+		pthread_mutex_unlock(philo->l_fork);
+
+		pthread_mutex_lock(philo->write_mutex);
+		philo_write("is sleeping", philo->id);
+		pthread_mutex_unlock(philo->write_mutex);
+		usleep(philo->time_to_sleep);
+
+		pthread_mutex_lock(philo->write_mutex);
+		philo_write("is thinking", philo->id);
+		pthread_mutex_unlock(philo->write_mutex);
+
 
 
 		
 	}
+	return (NULL);
 }
 
-int	monitor_logic(t_main *main)
+void	*monitor_logic(void *arg)
 {
+	t_main *main = (t_main *)arg;
 	int	i;
+
+	puts("monitor_logic"):
 
 	while (1)
 	{
@@ -47,12 +80,15 @@ int	monitor_logic(t_main *main)
 			if (get_time() - main->philo[i].time_last_meal >= main->time_to_die)
 			{
 				main->dead = 1;
-				return (printf("philo %d died:(", i), 0);
+				pthread_mutex_lock(&main->write_mutex);
+				philo_write("died", i);
+				pthread_mutex_unlock(&main->write_mutex);
+				return (NULL);
 			}
 			if (main->philo[i].times_eaten == main->n_times_must_eat)
 			{
 				main->dead = 1;
-				return (printf("sim ended"), 1);
+				return (NULL);
 			}
 			i++;
 		}

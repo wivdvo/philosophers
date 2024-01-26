@@ -6,7 +6,7 @@
 /*   By: wvan-der <wvan-der@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/20 16:45:28 by wvan-der          #+#    #+#             */
-/*   Updated: 2024/01/25 12:18:06 by wvan-der         ###   ########.fr       */
+/*   Updated: 2024/01/26 14:13:46 by wvan-der         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,7 +34,9 @@ typedef struct s_philo
 	size_t			time_last_meal;
 	size_t			times_eaten;
 
-
+	size_t			time_to_die;
+	size_t			time_to_eat;
+	size_t			time_to_sleep;
 
 	pthread_mutex_t	*r_fork;
 	pthread_mutex_t *l_fork;
@@ -65,8 +67,8 @@ size_t	ft_strlen(char *str);
 int		init_main_struct(t_main *main, int ac, char **av);
 int		init_philos(t_main *main);
 int		init_philo_struct(t_philo *philo, int *dead, char **av, int i);
-void	philo_logic(t_philo *philo);
-int		monitor_logic(t_main *main);
+void	*philo_logic(void *arg);
+void	*monitor_logic(void *arg);
 int		init_philos(t_main *main);
 int		init_main_struct(t_main *main, int ac, char **av);
 int		convert_and_check_input(char *str);

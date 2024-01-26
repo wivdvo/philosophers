@@ -22,7 +22,7 @@ $(PRINTF):
 			make -C ft_printf
 
 $(NAME):	$(OBJS)	$(PRINTF)
-				$(CC) $(OBJS) $(CFLAGS) $(PRINTF) -o philosophers
+				$(CC) $(OBJS) $(CFLAGS) -g $(PRINTF) -o philosophers
 
 clean:
 				make clean -C ft_printf
