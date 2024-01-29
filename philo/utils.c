@@ -6,7 +6,7 @@
 /*   By: wvan-der <wvan-der@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/22 13:55:19 by wvan-der          #+#    #+#             */
-/*   Updated: 2024/01/29 15:17:01 by wvan-der         ###   ########.fr       */
+/*   Updated: 2024/01/29 17:09:34 by wvan-der         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -131,12 +131,15 @@ size_t	get_time(void)
 int	convert_and_check_input(char *str)
 {
 	long long nb;
+	char *itoa_str;
 
 	nb = ft_atoi(str);
-	if (ft_strcmp(ft_itoa(nb), str) != 0)
-		return (put_error("invalid number"), -1);
+	itoa_str = ft_itoa(nb);
+	if (ft_strcmp(itoa_str, str) != 0)
+		return (put_error("invalid number"), free(itoa_str), -1);
 	if (nb < 0)
-		return (put_error("negativ number"), -1);
+		return (put_error("negativ number"), free(itoa_str), -1);
 	//printf("nb:%lld\n", nb);
+	free(itoa_str);
 	return (nb);
 }
