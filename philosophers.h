@@ -6,7 +6,7 @@
 /*   By: wvan-der <wvan-der@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/20 16:45:28 by wvan-der          #+#    #+#             */
-/*   Updated: 2024/01/26 14:13:46 by wvan-der         ###   ########.fr       */
+/*   Updated: 2024/01/29 16:14:42 by wvan-der         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,6 +30,8 @@ typedef struct s_philo
 
 
 	int				*dead;
+
+	size_t			start_time;
 
 	size_t			time_last_meal;
 	size_t			times_eaten;
@@ -73,5 +75,8 @@ int		init_philos(t_main *main);
 int		init_main_struct(t_main *main, int ac, char **av);
 int		convert_and_check_input(char *str);
 size_t	get_time(void);
+void	pick_r_fork(t_philo *philo);
+void	pick_l_fork(t_philo *philo);
+void	*lonely_philo(void *arg);
 
 #endif

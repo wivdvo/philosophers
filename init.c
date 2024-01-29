@@ -6,7 +6,7 @@
 /*   By: wvan-der <wvan-der@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/24 14:41:29 by wvan-der          #+#    #+#             */
-/*   Updated: 2024/01/26 17:08:30 by wvan-der         ###   ########.fr       */
+/*   Updated: 2024/01/29 16:19:56 by wvan-der         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,6 +41,9 @@ int	init_philo_struct(t_philo *philo, int *dead, char **av, int i)
 	philo->dead = dead;
 	philo->n_philo = convert_and_check_input(av[1]);
 	if (philo->n_philo == -1 || philo->n_philo == 0)
+		return (0);
+	philo->time_to_die = convert_and_check_input(av[2]);
+	if (philo->time_to_die == -1 || philo->time_to_die == 0)
 		return (0);
 	philo->time_to_eat = convert_and_check_input(av[3]);
 	if (philo->time_to_eat == -1 || philo->time_to_eat == 0)
@@ -77,6 +80,7 @@ int	init_philos(t_main *main)
 {
 	pthread_t	*threads;
 	pthread_t	monitor;
+	size_t		start_time;
 	int	i;
 
 
@@ -98,22 +102,37 @@ int	init_philos(t_main *main)
 		i++;
 	}
 	i  = 0;
+	start_time = get_time();
+
+
+	if (main->n_philo == 1)
+	{
+		main->philo[0].start_time = start_time;
+		main->philo[0].time_last_meal = start_time;
+		pthread_create(&threads[0], NULL, &lonely_philo, &main->philo[0]);
+		pthread_join(threads[0], NULL);
+		return (1);
+	}
 	while (i < main->n_philo)	
 	{
 		main->philo[i].r_fork = &main->forks[i];
 		main->philo[i].l_fork = &main->forks[(i + 1) % main->n_philo];
-		main->philo[i].time_last_meal = get_time();
+		main->philo[i].start_time = start_time;
+		main->philo[i].time_last_meal = start_time;
 		pthread_create(&threads[i], NULL, &philo_logic, &(main->philo)[i]);
-		usleep(50);
 		i++;
 	}
 	pthread_create(&monitor, NULL, &monitor_logic, main);
 	// puts("after create threads");
-	// i = 0;
-	// while (i < main->n_philo)
-	// {
-	// 	pthread_join(threads[i], NULL);
-	// 	i++;
-	// }
+	i = 0;
+	while (i < main->n_philo)
+	{
+		pthread_join(threads[i], NULL);
+		//puts("Joined");
+		i++;
+	}
+	//puts("Here");
+	pthread_join(monitor, NULL);
+	//puts("There");
 	return (1);
 }
