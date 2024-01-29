@@ -24,7 +24,7 @@ $(PRINTF):
 			make -C ft_printf
 
 $(NAME):	$(OBJS)	$(PRINTF) $(HEADERS)
-				$(CC) $(OBJS) $(CFLAGS) -g $(PRINTF) -o philosophers
+				$(CC) $(OBJS) $(CFLAGS) -g $(PRINTF) -o philo
 
 clean:
 				make clean -C ft_printf
