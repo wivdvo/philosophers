@@ -6,7 +6,7 @@
 /*   By: wvan-der <wvan-der@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/30 12:35:53 by wvan-der          #+#    #+#             */
-/*   Updated: 2024/01/30 12:37:31 by wvan-der         ###   ########.fr       */
+/*   Updated: 2024/01/30 14:32:39 by wvan-der         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,16 +25,16 @@ int	handle_lonely_philo(t_main *main, size_t start_time)
 int	put_input_in_main(t_main *main, int ac, char **av)
 {
 	main->n_philo = convert_and_check_input(av[1]);
-	if (main->n_philo == -1 || main->n_philo == 0)
+	if (main->n_philo == 0)
 		return (0);
 	main->time_to_die = convert_and_check_input(av[2]);
-	if (main->time_to_die == -1 || main->time_to_die == 0)
+	if (main->time_to_die == 0)
 		return (0);
 	main->time_to_eat = convert_and_check_input(av[3]);
-	if (main->time_to_eat == -1 || main->time_to_eat == 0)
+	if (main->time_to_eat == 0)
 		return (0);
 	main->time_to_sleep = convert_and_check_input(av[4]);
-	if (main->time_to_sleep == -1 || main->time_to_sleep == 0)
+	if (main->time_to_sleep == 0)
 		return (0);
 	if (ac == 6)
 	{

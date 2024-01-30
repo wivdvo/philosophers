@@ -6,7 +6,7 @@
 /*   By: wvan-der <wvan-der@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/20 16:45:28 by wvan-der          #+#    #+#             */
-/*   Updated: 2024/01/30 14:01:40 by wvan-der         ###   ########.fr       */
+/*   Updated: 2024/01/30 15:04:33 by wvan-der         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,11 +26,11 @@
 typedef struct s_philo
 {
 	int				id;
-	unsigned int	n_philo;
+	int				n_philo;
 	int				*dead;
 	size_t			start_time;
 	size_t			time_last_meal;
-	size_t			times_eaten;
+	int				times_eaten;
 	size_t			time_to_die;
 	size_t			time_to_eat;
 	size_t			time_to_sleep;
@@ -46,11 +46,11 @@ typedef struct s_main
 	size_t			time_to_die;
 	size_t			time_to_eat;
 	size_t			time_to_sleep;
-	unsigned int	n_times_must_eat;
+	int				n_times_must_eat;
 	pthread_mutex_t	write_mutex;
 	pthread_mutex_t	check_mutex;
 	t_philo			*philo;
-	unsigned int	n_philo;
+	int				n_philo;
 	pthread_mutex_t	*forks;
 	int				dead;
 	pthread_t		*threads;

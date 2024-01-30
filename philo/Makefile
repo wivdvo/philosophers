@@ -19,7 +19,7 @@ CC = cc
 
 RM = rm -rf
 
-#CFLAGS = -Wall -Werro -Wextra
+CFLAGS = -Wall -Werror -Wextra
 
 PRINTF = ft_printf/libftprintf.a
 

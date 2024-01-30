@@ -6,7 +6,7 @@
 /*   By: wvan-der <wvan-der@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/24 14:41:29 by wvan-der          #+#    #+#             */
-/*   Updated: 2024/01/30 14:02:01 by wvan-der         ###   ########.fr       */
+/*   Updated: 2024/01/30 15:03:39 by wvan-der         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,16 +18,16 @@ int	init_philo_struct(t_philo *philo, int *dead, char **av, int i)
 	philo->dead = dead;
 	philo->done = 0;
 	philo->n_philo = convert_and_check_input(av[1]);
-	if (philo->n_philo == -1 || philo->n_philo == 0)
+	if (philo->n_philo == 0)
 		return (0);
 	philo->time_to_die = convert_and_check_input(av[2]);
-	if (philo->time_to_die == -1 || philo->time_to_die == 0)
+	if (philo->time_to_die == 0)
 		return (0);
 	philo->time_to_eat = convert_and_check_input(av[3]);
-	if (philo->time_to_eat == -1 || philo->time_to_eat == 0)
+	if (philo->time_to_eat == 0)
 		return (0);
 	philo->time_to_sleep = convert_and_check_input(av[4]);
-	if (philo->time_to_sleep == -1 || philo->time_to_sleep == 0)
+	if (philo->time_to_sleep == 0)
 		return (0);
 	return (1);
 }
@@ -103,7 +103,6 @@ int	create_threads(t_main *main, size_t start_time)
 int	init_philos(t_main *main)
 {
 	size_t		start_time;
-	int			i;
 
 	main->threads = (pthread_t *)malloc(sizeof(pthread_t) * main->n_philo);
 	if (!main->threads)
