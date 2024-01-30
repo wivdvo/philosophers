@@ -6,7 +6,7 @@
 /*   By: wvan-der <wvan-der@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/30 12:42:24 by wvan-der          #+#    #+#             */
-/*   Updated: 2024/01/30 13:49:26 by wvan-der         ###   ########.fr       */
+/*   Updated: 2024/01/30 18:06:23 by wvan-der         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,9 +27,16 @@ void	*lonely_philo(void *arg)
 	return (NULL);
 }
 
-int	pick_fork(t_philo *philo)
+int	pick_fork(t_philo *philo, size_t count)
 {
-	if (philo->id % 2 != 0)
+	if (count == 0)
+	{
+		if (philo->id % 2 == 0)
+			return (case_even(philo));
+		else
+			return (better_usleep(philo->time_to_eat - 5), 1);
+	}
+	if (philo->id % 2 == 0)
 		return (case_even(philo));
 	else
 		return (case_odd(philo));

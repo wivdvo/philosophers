@@ -6,7 +6,7 @@
 /*   By: wvan-der <wvan-der@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/24 14:41:29 by wvan-der          #+#    #+#             */
-/*   Updated: 2024/01/30 15:03:39 by wvan-der         ###   ########.fr       */
+/*   Updated: 2024/01/30 18:33:53 by wvan-der         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 int	init_philo_struct(t_philo *philo, int *dead, char **av, int i)
 {
-	philo->id = i;
+	(void)i;
 	philo->dead = dead;
 	philo->done = 0;
 	philo->n_philo = convert_and_check_input(av[1]);
@@ -83,6 +83,7 @@ int	create_threads(t_main *main, size_t start_time)
 		main->philo[i].l_fork = &main->forks[(i + 1) % main->n_philo];
 		main->philo[i].start_time = start_time;
 		main->philo[i].time_last_meal = start_time;
+		main->philo[i].id = i;
 		if (pthread_create(&main->threads[i], NULL,
 				&philo_logic, &(main->philo)[i]) != 0)
 		{
