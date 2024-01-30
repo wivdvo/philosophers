@@ -6,7 +6,7 @@
 /*   By: wvan-der <wvan-der@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/24 13:49:18 by wvan-der          #+#    #+#             */
-/*   Updated: 2024/01/30 18:13:24 by wvan-der         ###   ########.fr       */
+/*   Updated: 2024/01/30 20:05:45 by wvan-der         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,7 @@ void	eating_logic(t_philo *philo)
 	philo->time_last_meal = get_time();
 	philo->times_eaten++;
 	pthread_mutex_unlock(philo->check_mutex);
-	better_usleep(philo->time_to_eat);
+	better_usleep(philo->time_to_eat, philo);
 	if (philo->id % 2 == 0)
 	{
 		pthread_mutex_unlock(philo->l_fork);
@@ -47,7 +47,7 @@ void	sleeping_logic(t_philo *philo)
 	pthread_mutex_lock(philo->write_mutex);
 	philo_write("is sleeping", philo->id, philo);
 	pthread_mutex_unlock(philo->write_mutex);
-	better_usleep(philo->time_to_sleep);
+	better_usleep(philo->time_to_sleep, philo);
 }
 
 void	thinking_logic(t_philo *philo)
@@ -55,13 +55,14 @@ void	thinking_logic(t_philo *philo)
 	pthread_mutex_lock(philo->write_mutex);
 	philo_write("is thinking", philo->id, philo);
 	pthread_mutex_unlock(philo->write_mutex);
-	usleep(100);
+	usleep(200);
 }
 
 void	*philo_logic(void *arg)
 {
 	t_philo	*philo;
 	size_t	count;
+	int		ret;
 
 	count = 0;
 	philo = (t_philo *)arg;
@@ -69,8 +70,12 @@ void	*philo_logic(void *arg)
 	{
 		if (!check_logic(philo))
 			return (NULL);
-		if (pick_fork(philo, count) == 0)
+		ret = pick_fork(philo, count);
+		count++;
+		if (ret == 0)
 			return (NULL);
+		if (ret == 2)
+			continue;
 		eating_logic(philo);
 		if (!check_logic(philo))
 			return (NULL);
@@ -78,7 +83,6 @@ void	*philo_logic(void *arg)
 		if (!check_logic(philo))
 			return (NULL);
 		thinking_logic(philo);
-		count++;
 	}
 	return (NULL);
 }

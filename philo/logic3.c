@@ -6,7 +6,7 @@
 /*   By: wvan-der <wvan-der@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/30 12:42:24 by wvan-der          #+#    #+#             */
-/*   Updated: 2024/01/30 18:06:23 by wvan-der         ###   ########.fr       */
+/*   Updated: 2024/01/30 20:07:51 by wvan-der         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@ void	*lonely_philo(void *arg)
 	pthread_mutex_lock(philo->write_mutex);
 	philo_write("has taken a fork", philo->id, philo);
 	pthread_mutex_unlock(philo->write_mutex);
-	better_usleep(philo->time_to_die);
+	better_usleep(philo->time_to_die, philo);
 	pthread_mutex_lock(philo->write_mutex);
 	philo_write("died", philo->id, philo);
 	pthread_mutex_unlock(philo->write_mutex);
@@ -34,8 +34,9 @@ int	pick_fork(t_philo *philo, size_t count)
 		if (philo->id % 2 == 0)
 			return (case_even(philo));
 		else
-			return (better_usleep(philo->time_to_eat - 5), 1);
+			return (better_usleep(philo->time_to_eat - 5, philo), 2);
 	}
+	(void)count;
 	if (philo->id % 2 == 0)
 		return (case_even(philo));
 	else

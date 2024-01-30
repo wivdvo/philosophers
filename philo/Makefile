@@ -1,4 +1,4 @@
-NAME = philosophers
+NAME = philo
 
 SRCS = 	main.c \
 init.c \
@@ -13,8 +13,6 @@ free_utils.c
 
 OBJS = $(SRCS:.c=.o)
 
-HEADERS = philosophers.h
-
 CC = cc
 
 RM = rm -rf
@@ -27,9 +25,9 @@ PRINTF = ft_printf/libftprintf.a
 all: $(NAME)
 
 $(PRINTF):
-			make -C ft_printf
+				make -C ft_printf
 
-$(NAME):	$(OBJS)	$(PRINTF) $(HEADERS)
+$(NAME):	$(OBJS) $(PRINTF)
 				$(CC) $(OBJS) $(CFLAGS) -g $(PRINTF) -o philo
 
 clean:
