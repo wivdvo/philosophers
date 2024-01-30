@@ -2,8 +2,14 @@ NAME = philosophers
 
 SRCS = 	main.c \
 init.c \
+init2.c \
 logic.c \
-utils.c
+logic2.c \
+logic3.c \
+monitor_logic.c \
+utils.c \
+utils2.c \
+free_utils.c
 
 OBJS = $(SRCS:.c=.o)
 
