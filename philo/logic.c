@@ -6,7 +6,7 @@
 /*   By: wvan-der <wvan-der@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/24 13:49:18 by wvan-der          #+#    #+#             */
-/*   Updated: 2024/01/30 20:05:45 by wvan-der         ###   ########.fr       */
+/*   Updated: 2024/01/31 10:55:00 by wvan-der         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,7 +75,7 @@ void	*philo_logic(void *arg)
 		if (ret == 0)
 			return (NULL);
 		if (ret == 2)
-			continue;
+			continue ;
 		eating_logic(philo);
 		if (!check_logic(philo))
 			return (NULL);

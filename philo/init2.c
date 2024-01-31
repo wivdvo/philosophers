@@ -6,7 +6,7 @@
 /*   By: wvan-der <wvan-der@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/30 12:35:53 by wvan-der          #+#    #+#             */
-/*   Updated: 2024/01/30 14:32:39 by wvan-der         ###   ########.fr       */
+/*   Updated: 2024/01/31 11:02:25 by wvan-der         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,6 +18,7 @@ int	handle_lonely_philo(t_main *main, size_t start_time)
 	main->philo[0].time_last_meal = start_time;
 	pthread_create(&main->threads[0], NULL, &lonely_philo, &main->philo[0]);
 	pthread_join(main->threads[0], NULL);
+	clean_mutex(main);
 	ft_free(main);
 	return (1);
 }

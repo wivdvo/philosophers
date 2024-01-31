@@ -6,7 +6,7 @@
 /*   By: wvan-der <wvan-der@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/20 16:45:28 by wvan-der          #+#    #+#             */
-/*   Updated: 2024/01/30 20:00:04 by wvan-der         ###   ########.fr       */
+/*   Updated: 2024/01/31 11:19:45 by wvan-der         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -85,5 +85,7 @@ void	philo_write(char *s, int id, t_philo *philo);
 int		case_even(t_philo *philo);
 int		case_odd(t_philo *philo);
 void	better_usleep(size_t ms, t_philo *philo);
+int		check_dead(t_philo *philo);
+void	clean_mutex(t_main *main);
 
 #endif

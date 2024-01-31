@@ -6,7 +6,7 @@
 /*   By: wvan-der <wvan-der@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/24 14:41:29 by wvan-der          #+#    #+#             */
-/*   Updated: 2024/01/30 18:33:53 by wvan-der         ###   ########.fr       */
+/*   Updated: 2024/01/31 11:19:11 by wvan-der         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,6 +18,10 @@ int	init_philo_struct(t_philo *philo, int *dead, char **av, int i)
 	philo->dead = dead;
 	philo->done = 0;
 	philo->n_philo = convert_and_check_input(av[1]);
+	philo->time_last_meal = 0;
+	philo->times_eaten = 0;
+	philo->write_mutex = NULL;
+	philo->check_mutex = NULL;
 	if (philo->n_philo == 0)
 		return (0);
 	philo->time_to_die = convert_and_check_input(av[2]);
@@ -118,7 +122,7 @@ int	init_philos(t_main *main)
 	if (main->n_philo == 1)
 		return (handle_lonely_philo(main, start_time), 1);
 	if (create_threads(main, start_time) == 0)
-		return (0);
+		return (ft_free(main), clean_mutex(main), 0);
 	if (pthread_create(&main->monitor, NULL, &monitor_logic, main) != 0)
 		return (monitor_create_failed(main), 0);
 	clean_up(main);

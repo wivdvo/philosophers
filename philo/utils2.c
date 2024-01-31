@@ -6,7 +6,7 @@
 /*   By: wvan-der <wvan-der@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/30 12:45:06 by wvan-der          #+#    #+#             */
-/*   Updated: 2024/01/30 20:00:17 by wvan-der         ###   ########.fr       */
+/*   Updated: 2024/01/31 10:24:47 by wvan-der         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,18 +51,6 @@ int	convert_and_check_input(char *str)
 		return (put_error("negativ number"), free(itoa_str), 0);
 	free(itoa_str);
 	return (nb);
-}
-
-static int	check_dead(t_philo *philo)
-{
-	pthread_mutex_lock(philo->check_mutex);
-	if (*philo->dead == 1)
-	{
-		pthread_mutex_unlock(philo->check_mutex);
-		return (1);
-	}
-	pthread_mutex_unlock(philo->check_mutex);
-	return (0);
 }
 
 void	better_usleep(size_t ms, t_philo *philo)

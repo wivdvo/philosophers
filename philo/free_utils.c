@@ -6,7 +6,7 @@
 /*   By: wvan-der <wvan-der@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/30 12:33:49 by wvan-der          #+#    #+#             */
-/*   Updated: 2024/01/30 12:37:24 by wvan-der         ###   ########.fr       */
+/*   Updated: 2024/01/31 11:03:21 by wvan-der         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,6 +42,7 @@ int	monitor_create_failed(t_main *main)
 	main->dead = 1;
 	while (i < main->n_philo)
 		pthread_join(main->threads[i++], NULL);
+	clean_mutex(main);
 	ft_free(main);
 	put_error("thread create failed");
 	return (1);
@@ -55,6 +56,7 @@ int	clean_up(t_main *main)
 	while (i < main->n_philo)
 		pthread_join(main->threads[i++], NULL);
 	pthread_join(main->monitor, NULL);
+	clean_mutex(main);
 	ft_free(main);
 	return (1);
 }
