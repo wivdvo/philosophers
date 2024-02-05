@@ -5,8 +5,8 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: wvan-der <wvan-der@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/01/24 14:41:29 by wvan-der          #+#    #+#             */
-/*   Updated: 2024/01/31 11:19:11 by wvan-der         ###   ########.fr       */
+/*   Created: 2024/01/31 14:57:35 by wvan-der          #+#    #+#             */
+/*   Updated: 2024/01/31 14:57:36 by wvan-der         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,6 +46,7 @@ int	init_main_struct(t_main *main, int ac, char **av)
 	main->forks = NULL;
 	philo = NULL;
 	main->threads = NULL;
+	main->n_times_must_eat = 0;
 	if (put_input_in_main(main, ac, av) == 0)
 		return (0);
 	philo = (t_philo *)malloc(sizeof(t_philo) * main->n_philo);
@@ -54,7 +55,7 @@ int	init_main_struct(t_main *main, int ac, char **av)
 	while (i < main->n_philo)
 	{
 		if (init_philo_struct(&philo[i], &main->dead, av, i) == 0)
-			return (0);
+			return (free(philo), 0);
 		i++;
 	}
 	main->philo = philo;
@@ -70,7 +71,8 @@ int	give_mutexes_make_forks(t_main *main)
 	{
 		main->philo[i].write_mutex = &main->write_mutex;
 		main->philo[i].check_mutex = &main->check_mutex;
-		pthread_mutex_init(&(main->forks)[i], NULL);
+		if (pthread_mutex_init(&(main->forks)[i], NULL) != 0)
+			return (clean_mutex(main, i), 0);
 		i++;
 	}
 	return (1);
@@ -91,8 +93,8 @@ int	create_threads(t_main *main, size_t start_time)
 		if (pthread_create(&main->threads[i], NULL,
 				&philo_logic, &(main->philo)[i]) != 0)
 		{
-			put_error("thread create failed\n");
-			main->dead = 1;
+			philo_threads_error(main);
+			i--;
 			while (i >= 0)
 			{
 				pthread_join(main->threads[i], NULL);
@@ -115,14 +117,17 @@ int	init_philos(t_main *main)
 	main->forks = malloc(sizeof(pthread_mutex_t) * main->n_philo);
 	if (!main->forks)
 		return (ft_free(main), 0);
-	pthread_mutex_init(&main->write_mutex, NULL);
-	pthread_mutex_init(&main->check_mutex, NULL);
-	give_mutexes_make_forks(main);
+	if (pthread_mutex_init(&main->write_mutex, NULL) != 0)
+		return (ft_free(main), 0);
+	if (pthread_mutex_init(&main->check_mutex, NULL) != 0)
+		return (pthread_mutex_destroy(&main->write_mutex), ft_free(main), 0);
+	if (give_mutexes_make_forks(main) != 1)
+		return (ft_free(main), 0);
 	start_time = get_time();
 	if (main->n_philo == 1)
 		return (handle_lonely_philo(main, start_time), 1);
 	if (create_threads(main, start_time) == 0)
-		return (ft_free(main), clean_mutex(main), 0);
+		return (clean_mutex(main, main->n_philo), ft_free(main), 0);
 	if (pthread_create(&main->monitor, NULL, &monitor_logic, main) != 0)
 		return (monitor_create_failed(main), 0);
 	clean_up(main);

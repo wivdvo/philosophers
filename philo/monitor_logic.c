@@ -6,7 +6,7 @@
 /*   By: wvan-der <wvan-der@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/30 12:39:24 by wvan-der          #+#    #+#             */
-/*   Updated: 2024/01/31 11:12:31 by wvan-der         ###   ########.fr       */
+/*   Updated: 2024/01/31 14:52:42 by wvan-der         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,14 +75,14 @@ void	*monitor_logic(void *arg)
 	}
 }
 
-void	clean_mutex(t_main *main)
+void	clean_mutex(t_main *main, int max)
 {
 	int	i;
 
 	i = 0;
 	pthread_mutex_destroy(&main->write_mutex);
 	pthread_mutex_destroy(&main->check_mutex);
-	while (i < main->n_philo)
+	while (i < max)
 	{
 		pthread_mutex_destroy(&(main->forks)[i]);
 		i++;

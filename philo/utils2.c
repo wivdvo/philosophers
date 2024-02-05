@@ -6,7 +6,7 @@
 /*   By: wvan-der <wvan-der@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/30 12:45:06 by wvan-der          #+#    #+#             */
-/*   Updated: 2024/01/31 10:24:47 by wvan-der         ###   ########.fr       */
+/*   Updated: 2024/01/31 14:34:51 by wvan-der         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,6 +45,8 @@ int	convert_and_check_input(char *str)
 
 	nb = ft_atoi(str);
 	itoa_str = ft_itoa(nb);
+	if (!itoa_str)
+		return (0);
 	if (ft_strcmp(itoa_str, str) != 0)
 		return (put_error("invalid number"), free(itoa_str), 0);
 	if (nb < 0)

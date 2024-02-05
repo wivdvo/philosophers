@@ -6,14 +6,13 @@
 /*   By: wvan-der <wvan-der@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/20 16:45:28 by wvan-der          #+#    #+#             */
-/*   Updated: 2024/01/31 11:19:45 by wvan-der         ###   ########.fr       */
+/*   Updated: 2024/01/31 15:03:27 by wvan-der         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef PHILOSOPHERS_H
 # define PHILOSOPHERS_H
 
-# include "ft_printf/ft_printf.h"
 # include <time.h>
 # include <stdlib.h>
 # include <stdio.h>
@@ -86,6 +85,7 @@ int		case_even(t_philo *philo);
 int		case_odd(t_philo *philo);
 void	better_usleep(size_t ms, t_philo *philo);
 int		check_dead(t_philo *philo);
-void	clean_mutex(t_main *main);
+void	clean_mutex(t_main *main, int max);
+void	philo_threads_error(t_main *main);
 
 #endif

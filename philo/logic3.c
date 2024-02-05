@@ -6,7 +6,7 @@
 /*   By: wvan-der <wvan-der@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/30 12:42:24 by wvan-der          #+#    #+#             */
-/*   Updated: 2024/01/30 20:07:51 by wvan-der         ###   ########.fr       */
+/*   Updated: 2024/01/31 14:10:27 by wvan-der         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,11 +18,11 @@ void	*lonely_philo(void *arg)
 
 	philo = (t_philo *)arg;
 	pthread_mutex_lock(philo->write_mutex);
-	philo_write("has taken a fork", philo->id, philo);
+	printf("%zu 0 has taken a fork\n", get_time() - philo->start_time);
 	pthread_mutex_unlock(philo->write_mutex);
 	better_usleep(philo->time_to_die, philo);
 	pthread_mutex_lock(philo->write_mutex);
-	philo_write("died", philo->id, philo);
+	printf("%zu 0 died\n", get_time() - philo->start_time);
 	pthread_mutex_unlock(philo->write_mutex);
 	return (NULL);
 }
