@@ -8,6 +8,6 @@ cd philosophers
 make
 
 ## Usage
-Run ./philosophers [number of philos] [time to die] [time to eat] [time to sleep] optional [times philos must eat]  
+Run ./philosophers [number of philos] [time to die] [time to eat] [time to sleep] optional [n times philos must eat]  
 
 Made by Willem van der Vorst
